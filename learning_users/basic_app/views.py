@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from basic_app.forms import UserForm,UserProfileInfoForm
+from django.contrib.auth.models import User
+from .models import ms_code_updater,userInfo
 
 
 
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -116,3 +118,24 @@ def user_login(request):
     else:
         #Nothing has been provided for username or password.
         return render(request, 'basic_app/login.html', {})
+
+
+def newuser_reg(request):
+    if request.method == 'POST':
+        print(ms_code_updater.intcode)
+        user=User()
+        UserInfo=userInfo()
+        Code=ms_code_updater()
+        UserInfo.f_name = request.POST.get('f_name') 
+        UserInfo.l_name = request.POST.get('l_name') 
+        UserInfo.email = request.POST.get('email') 
+        UserInfo.mob = request.POST.get('mob') 
+        user.set_password(request.POST.get('password'))
+        user.username='ms'+str(ms_code_updater.intcode)
+        user_id=ms_code_updater.intcode
+        Code.intcode+=1
+        UserInfo.save()
+        Code.save()
+        user.save()
+
+    return render(request,'basic_app/new_user.html')
