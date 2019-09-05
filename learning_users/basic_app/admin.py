@@ -1,7 +1,6 @@
 from django.contrib import admin
-from basic_app.models import UserProfileInfo, User,userInfo,ms_code_updater
+from basic_app.models import UserProfileInfo,Log
 
 # Register your models here.
 admin.site.register(UserProfileInfo)
-admin.site.register(userInfo)
-admin.site.register(ms_code_updater)
+admin.site.register(Log)

@@ -1,15 +1,838 @@
-{% extends "basic_app/base.html" %}
-{% block body_block %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Pravesha'19</title>
+</head>
 
-<div class="container">
-  <div class="jumbotron">
-    <h1>Django Level Five</h1>
-    {% if user.is_authenticated %}
-        <h2>Welcome {{ user.username }}!</h2>
-    {% else %}
-        <h2>Welcome to the site!</h2>
-    {% endif %}
-  </div>
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href=" {% static 'basic_app/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/util.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'basic_app/index/css/reg.css' %}">
+<!--===============================================================================================-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'basic_app/index/css/Features-Boxed.css' %}">
+<link rel="stylesheet" href="{% static 'basic_app/index/css/Features-Blue.css' %}">
+<link rel="stylesheet" href="{% static 'basic_app/index/css/Highlight-Clean.css' %}">
+<link rel="stylesheet" href="{% static 'basic_app/index/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'basic_app/index/css/Footer-Basic.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+</head>
+<body>
+	
+{% if user.is_authenticated %}
+
+
+
+<ul class="nav justify-content-end" style="padding: 1.5%; background-color: teal;" >
+		<li class="nav-item" style="padding-right: 5%;">
+			<a class="nav-item" style="color: #eaecee" href="{%url 'basic_app:user'%}">{{user.username}} - {{user.first_name}} {{user.last_name}}</a>
+		</li>  
+		<li class="nav-item" style="padding-right: 5%;">
+		  <a class="nav-item" href="{%url 'logout'%}" style="color:  #f9e79f;">Logout</a>
+		</li>
+
+	  </ul>
+
+  {% if user.profile.food_pref == 'ND' %}
+    <div class="highlight-clean" style="background-color:#F7F7F7;">
+      <div class="container">
+          <div class="intro">
+             <h2 class="text-center">Please select you food preference :)</h2>
+         </div>
+         <div class="buttons"> 
+           <form action="{% url 'basic_app:food_pref_updt' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-light" role="button" type="submit"  style="background-color: green;color:white">Veg</button>
+            <input type="hidden" name="fp" value="V">
+            <input type="hidden" name="no" value="{{user.profile.mob_no}}">
+           </form> 
+           <form action="{% url 'basic_app:food_pref_updt' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-light" type="submit" style="background-color:tomato ;color:white;">Non-VEG</button></div>
+            <input type="hidden" name="fp" value="NV">
+            <input type="hidden" name="no" value="{{user.profile.mob_no}}">
+           </form>
+        </div>
+    </div>
+  {% endif %}  
+
+{% else %}
+
+
+
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #a4508b;
+	  background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+	  ">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel"></h5> <br> 
+			  <img src="{% static 'basic_app/index/images/logo.png' %}" alt="" style="width:50%;  display: block;margin-left: auto;margin-right: auto;width: 50%;"> 
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close" ></button>
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+					<div>
+						<div>
+							<div>
+					
+						  {% if registered %}
+							<h1>Thank you for registering!</h1>
+							<h3>Your ID is :{{ username }}</h3><br>
+							Please take a note of your Registration ID
+						  {% else %}
+					
+					
+							<form enctype="multipart/form-data" method="POST" action="{% url 'basic_app:register' %}" >
+							  {% csrf_token %}
+							  {{ user_form.as_p }}
+							  {{ profile_form.as_p }}
+					
+						  
+						</div>
+					  </div>
+					</div> <br>
+					<div class="alert alert-warning" role="alert">
+							Registration fee of ₹200 can be paid onspot at the registration desk.
+					</div>
+				</div>
+				
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="submit" class="btn btn-primary">Register</button>
+			</div></form>
+		</div>
+	
+		</div>
+	  </div>
+	  {% endif %}
+
+
+
+
+	<div class="container-login100" style="background-image: url('{% static 'basic_app/index/images/bg_4.png' %}');">
+		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+			<form class="login100-form validate-form" action="{% url 'basic_app:user_login' %}" method="POST">
+        {% csrf_token %}
+        <span class="login100-form-title p-b-37">
+					<img src="{% static 'basic_app/index/images/logo.png' %}" alt="" style="width: 90%;">
+				</span>
+
+				<div class="wrap-input100 validate-input m-b-20" data-validate="Please Enter Registration ID">
+					<input class="input100" type="text" name="username" placeholder="Registration ID">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-25" data-validate = "Enter password">
+					<input class="input100" type="password" name="password" placeholder="Password">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn">
+						Sign In
+					</button>
+				</div>
+
+				<!-- <div class="text-center p-t-57 p-b-20">
+					<span class="txt1">
+						Or login with
+					</span>
+				</div>
+
+				<div class="flex-c p-b-112">
+					<a href="#" class="login100-social-item">
+						<i class="fa fa-facebook-f"></i>
+					</a>
+
+					<a href="#" class="login100-social-item">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+					</a>
+				</div> --> <br> <br>
+
+				<div class="text-center">
+					<a class="txt2 hov1" data-toggle="modal" data-target="#exampleModal">
+						Sign Up
+					</a>
+				</div>
+			</form>
+
+			
+		</div>
+	</div>
+
+	
+	<div id="dropDownSelect1"></div>
+  {% endif %}
+
+  <div class="features-boxed">
+	<div class="container">
+		<div class="intro">
+			<h2 class="text-center">Events</h2>
+		</div>
+		<div class="row justify-content-center features">
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/tutorial.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Paper Presentation</h3>
+					<p class="description">Projects on digitization and development. <br><br> </p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongpp"> Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.pp == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="pp"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="pp"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div> 
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/politics.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Block and Tackle</h3>
+					<p class="description">Debate and compete with technical intelligence to overcome your rivals.</p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongbat">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.bat == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="bat"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="bat"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/pub.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Tech Quiz</h3>
+					<p class="description">On theme latest tech news and developments. <br><br> </p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongtq">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.tq == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="tq"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="tq"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/advertising.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Adzap Reloaded</h3>
+					<p class="description">Sky is your limit! <br><br></p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongar">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.ar == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="ar"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="ar"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/motherboard.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Assemble . IO</h3>
+					<p class="description">Lets do some hardware. <br><br></p><a href="#" class="learn-more"  data-toggle="modal" data-target="#exampleModalLongaio">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.aio == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="aio"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="aio"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/typewriter.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">The Typist</h3>
+					<p class="description">Harness your typing skills while keeping the code intact.</p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongty">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.ty == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="ty"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="ty"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/talent.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Show your Talent</h3>
+					<p class="description">What's a sundial in the shade? Hide not your talents, they for use were made.</p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongsyt">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.syt == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="syt"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="syt"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/photo-camera.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Moment of the Day</h3>
+					<p class="description">Let your lens tell a story. <br><br>
+					 </p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongmod">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.mod == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="mod"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="mod"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/map.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Treasure Hunt</h3>
+					<p class="description">Clear vision holds the key. <br><br> </p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongth">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.th == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="th"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="th"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/pubg.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Gaming</h3>
+					<p class="description">It's Game Time.</p><a href="#" class="learn-more" data-toggle="modal" data-target="#exampleModalLongpubg">Learn more »</a>
+					{% if user.is_authenticated %}<br> <br> {% if user.profile.pubg == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="pubg"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="pubg"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %}
+				</div>
+			</div>
+		</div>
+	</div> 
 </div>
 
-{% endblock %}
+
+<!-- ------------------------------Online Events---------------------------------------- -->
+
+<div class="features-boxed">
+    <div class="container">
+        <div class="intro">
+            <h2 class="text-center">Online Events </h2>
+            </div>
+            <div class="row justify-content-center features">
+				<div class="col-sm-6 col-md-5 col-lg-4 item">
+					<div class="box"><img src="{% static 'basic_app/index/images/brand.svg' %}" alt="" style="width: 35%;">
+						<h3 class="name" style="padding-top:5%;">TikTok</h3>
+						<!-- <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p> -->
+						<a href="#" class="learn-more" class="learn-more" data-toggle="modal" data-target="#exampleModalLongtiktok">Learn more »</a>
+						<!-- {% if user.is_authenticated %}<br> <br> {% if user.profile.tiktok == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="tiktok"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="tiktok"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %} -->
+						</div>
+					</div>
+			
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/group.svg' %}" alt="" style="width: 35%;">
+					<h3 class="name" style="padding-top:5%;">Mannequin Challenge</h3>
+						<!-- <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p> -->
+						<a href="#" class="learn-more" class="learn-more" data-toggle="modal" data-target="#exampleModalLongmc">Learn more »</a>
+						<!-- {% if user.is_authenticated %}<br> <br> {% if user.profile.mc == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="mc"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="mc"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %} -->
+					</div>
+				</div>
+
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/mic.svg' %}" alt="" style="width: 35%; padding-top:5%;">
+					<h3 class="name">Open Mic</h3>
+						<!-- <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p> -->
+						<a href="#" class="learn-more" class="learn-more" data-toggle="modal" data-target="#exampleModalLongopm">Learn more »</a>
+						<!-- {% if user.is_authenticated %}<br> <br> {% if user.profile.opm == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="opm"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="opm"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %} --> 
+					</div>
+				</div>
+			
+			<div class="col-sm-6 col-md-5 col-lg-4 item">
+				<div class="box"><img src="{% static 'basic_app/index/images/vv.png' %}" alt="" style="width: 25%;">
+					<h3 class="name" style="padding-top:5%;">Meme Creation</h3>
+						<!-- <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu.</p> -->
+						<a href="#" class="learn-more" class="learn-more" data-toggle="modal" data-target="#exampleModalLongmeme">Learn more »</a>
+						<!-- {% if user.is_authenticated %}<br> <br> {% if user.profile.meme == False %}<form action="{% url 'basic_app:participate' %}" method="POST">{% csrf_token %}<button type="submit" class="btn btn-success" >Join</button> <input type="hidden" name="event" value="meme"><input type="hidden" name="no" value="{{user.profile.mob_no}}"></form> {% else %} <form action="{% url 'basic_app:departicipate' %}" method="POST">{% csrf_token %}<input type="hidden" name="event" value="meme"><input type="hidden" name="no" value="{{user.profile.mob_no}}"><button type="submit" class="btn btn-danger">Cancel</button></form> {% endif %}{% endif %} -->
+						</div>
+					</div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+<!-- Prize money--------------------------------------------------------->
+<div class="features-blue">
+        <div class="container" style="padding-top: 5%;">
+            <div class="intro"></div>
+            <div class="row features">
+                <div class="col-sm-6 col-md-4 item">
+					<img src="{% static 'basic_app/index/images/gift.svg' %}" alt="" style="width: 45%;"> <br><br>
+                    <h1 class="name" style="font-size: 25px;">Prize pool of ₹45000</h1>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+					<img src="{% static 'basic_app/index/images/award.svg' %}" alt="" style="width: 45%;"> <br><br>
+                    <h1 class="name" style="font-size: 25px;">Certificates for all participants</h1>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+ 					<img src="{% static 'basic_app/index/images/gold-medal.svg' %}" alt="" style="width: 45%;"> <br><br>
+                    <h1 class="name" style="font-size: 25px;">Win Exciting Prizes</h1>
+                </div>
+            </div>
+        </div></div>
+<!-- Footer------------------------------------------------------------------>
+
+
+<div class="footer-basic">
+        <footer>
+            <div class="social"><a href="https://www.instagram.com/pravesha_19?r=nametag"><i class="icon ion-social-instagram"></i></a><a href="https://t.me/pravesha19"><i class="icon ion-paper-airplane"></i></a></div>
+            <ul class="list-inline">
+				<li class="list-inline-item" style="color: black;"><a href="#">Home</a></li>
+				<li class="list-inline-item" style="color: black;"><a href="#" data-toggle="modal" data-target="#exampleModalCentercontact">Contact Us</a></li>
+            </ul>
+            <p class="copyright">Pracesha'19 © &nbsp; <br> Design &amp; Developed Highnes Joseph&nbsp;</p>
+        </footer>
+	</div>
+	
+
+  
+  <!-- Modal for PP--------------------------------------------------- -->
+  <div class="modal fade" id="exampleModalLongpp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLongTitle">Paper Presentation</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			->	Participants should submit their papers at pravesha2k19@gmail.com along with Registration ID. <br><br>
+			->  Papers should be sumitted on or before 18/09/2019. <br><br>
+			->  Maximum time duration of the presentation should not exceed 15 minutes. <br><br>
+			->	No prepration time will be given. <br><br>
+			->	Participants are requested to bring a copy of their paper in a pendrive. <br><br>
+			->  Judges decision will be final.
+
+		</div>
+		<div class="modal-footer">
+			{% if not user.is_authenticated %} 
+				<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+			{%else%}
+			  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			{%endif%}
+		</div>
+	  </div>
+	</div>
+  </div>
+
+    <!-- Modal for TQ--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongtq" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Tech Quiz</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	Two Participants  a team. <br><br>
+				->  The quiz will be of three rounds <i>1. General Quiz - (Pen and Paper) 2. Media Quiz - (Buzzer round) 3.Rapid fire - (Buzzer round)</i>. <br><br>
+				->  Electronic devices are strictly prohibitted. <br><br>
+				->  Any cause of action towards the questionaire will result in immediate disqualification. <br><br>
+				->  Judges decision will be final.
+	
+			</div>
+			<div class="modal-footer">
+					{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+
+	    <!-- Modal for BAT--------------------------------------------------- -->
+		<div class="modal fade" id="exampleModalLongbat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Block and Tackle</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					->	Minimum of 3 and Maximum of 4 members a team. <br><br>
+					->  Maximum of 5 minutes will be alloted for each team. <br><br>
+					->  Using any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+					->  Judges decision will be final.
+		
+				</div>
+				<div class="modal-footer">
+						{% if not user.is_authenticated %} 
+						<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+					{%else%}
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					{%endif%}
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+	    <!-- Modal for AR--------------------------------------------------- -->
+		<div class="modal fade" id="exampleModalLongar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Adzap Reloaded</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					->	A team can consist of 4-7 members. <br><br>
+					->	Team will be provided with random properties and the team have to perform an ad for the given product using the properties given. <br><br>
+					->  Maximum  time of 15 minutes <i>(10 min prepration + 5 min perfomance) </i> will be alloted for each team. <br><br>
+					->  All the properties given to the team should be utilized. <br><br>
+					->  Using any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+					->  Judges decision will be final.
+		
+				</div>
+				<div class="modal-footer">
+					{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+					{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				  {%endif%}
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+	<!-- Modal for AIO--------------------------------------------------- -->
+		<div class="modal fade" id="exampleModalLongaio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Assemble . IO</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					->	A completely dismantled system will be given for each participants. <br><br>
+					->  Participant should assemble and boot their system in minimum time. <br><br>
+					->  Number of boot attempts also will be considered as a constraint. <br><br>
+					->  Any form of malpractice will cause immediate disqualification with no prior notice. <br><br>
+					->  Judges decision will be final.
+		
+				</div>
+				<div class="modal-footer">
+						{% if not user.is_authenticated %} 
+						<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+					{%else%}
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					{%endif%}
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+	<!-- Modal for TY--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">The Typist</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	Two participants per team. <br><br>
+				->  One of the participant will be blind folded (<i>Should be good at typing</i>) and the other(<i>Should be a good programmer</i>) can guide to type the code for the blinded. <br><br>
+				->  Given program can be written in Python,Java,C or C++. <br><br>
+				->  This will be a time based event. <br><br>
+				->  Any form of malpractice will cause immediate disqualification with no prior notice. <br><br>
+				->  Judges decision will be final.
+	
+			</div>
+			<div class="modal-footer">
+					{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	<!-- Modal for SYT--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongsyt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Show Your Talent</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	Each participant/Team will be given a minute to showcase their talent. <br><br>
+				->  The participants are requested to bring their own necessary requirements (Karoke,Music Tracks,any other materials or properties,etc). <br><br>
+				->  Any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+				->  Judges decision will be final.
+	
+			</div>
+			<div class="modal-footer">
+					{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	<!-- Modal for MOD--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Moment of the Day</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	The event begins from the time of inauguration. <br><br>
+				->  Each participant can submit a Maximum of three photos. <br><br>
+				->  Photos should be taken within the campus. <br><br>
+				->  Any form of editing is strictly prohibitted. <br><br>
+				->  Candidate should submit their photos within 3.00 PM at the registration desk. <br><br>
+				->  Judges decision will be final.
+	
+			</div>
+			<div class="modal-footer">
+				{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	<!-- Modal for TH--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Moment of the Day</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	A team can have maximum of two members. <br><br>
+				->  Mobile phones with internet connection are mandatory <br><br>
+				->  Photos should be taken within the campus. <br><br>
+				->  Any form of practice against the event rules will cause immediate disqualification. <br><br>
+				->  Only teams who finishes the task within the event time will be considered. <br><br>
+				->  Judges decision will be final.
+	
+			</div>
+			<div class="modal-footer">
+				{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	<!-- Modal for PUBG--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongpubg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">PUBG</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->	Only squad of 4 are allowed. <br><br>
+				->  If a player disconnects he/she will be eliminated. <br><br>
+				->  Wifi will be provided. <br><br>
+				->  Any form of hacks or practice against the event rules will cause immediate disqualification of the squad. <br><br>
+				->  Judges decision will be final. <br><br>
+				<div style="color: tomato;">->  This event has an extra reg fee of ₹50.</div>	
+	
+			</div>
+			<div class="modal-footer">
+					{% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%}
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  	<!-- Modal for MEME--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongmeme" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Meme Creation</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->  Sign Up with us and get the registration ID. <br><br>
+				->	Only tamil movie templates are allowed. <br><br>
+				->  Send your entries to instagram @pravesha19 or pravesha2k19@gmail.com with your Registration ID. <br><br>
+				->  Use the hashtag #pravesha19 on instagram posts. <br><br>
+				->  Any form of vulgarity politics or troll aginst any individual will cause immediate disqualification with no prior notice. <br><br>
+				->  Judges decision will be final. <br><br>
+
+	
+			</div>
+			<div class="modal-footer">
+					<!-- {% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%} -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+
+	<!-- Modal for TIKTOK--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongtiktok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">TikTok</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				->  Sign Up with us and get the registration ID. <br><br>
+				->	Videos should be lessthan a minute. <br><br>
+				->  Send your entries to instagram @pravesha19 or pravesha2k19@gmail.com with your Registration ID. <br><br>
+				->  Use the hashtag #pravesha19 on instagram posts. <br><br>
+				->  Any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+				->  Winners will be selected based on the number of likes. <br><br>
+				->  Judges decision will be final. <br><br>
+
+	
+			</div>
+			<div class="modal-footer">
+					<!-- {% if not user.is_authenticated %} 
+					<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+				{%else%}
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				{%endif%} -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+
+	<!-- Modal for OPM--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongopm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Open Mic</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					->  Sign Up with us and get the registration ID. <br><br>
+					->	Videos should be lessthan a minute. <br><br>
+					->  Send your entries to instagram @pravesha19 or pravesha2k19@gmail.com with your Registration ID. <br><br>
+					->  Use the hashtag #pravesha19 on instagram posts. <br><br>
+					->  Any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+					->	Using any form of filter,autotuning or similar apps will result disqualification. <br> <br>
+					->  Judges decision will be final. <br><br>
+
+		
+				</div>
+				<div class="modal-footer">
+						<!-- {% if not user.is_authenticated %} 
+						<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+					{%else%}
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					{%endif%} -->
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+	<!-- Modal for MC--------------------------------------------------- -->
+	<div class="modal fade" id="exampleModalLongmc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLongTitle">Mannequin Challenge</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					->  Sign Up with us and get the registration ID. <br><br>
+					->	Videos should be lessthan a minute. <br><br>
+					->  Send your entries to instagram @pravesha19 or pravesha2k19@gmail.com with your Registration ID. <br><br>
+					->  Use the hashtag #pravesha19 on instagram posts. <br><br>
+					->  Any form of vulgarity will cause immediate disqualification with no prior notice. <br><br>
+					->  Judges decision will be final. <br><br>
+
+				</div>
+				<div class="modal-footer">
+						<!-- {% if not user.is_authenticated %} 
+						<button type="button" class="btn btn-success" data-dismiss="modal">Sign In to Join</button>
+					{%else%}
+					  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					{%endif%} -->
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+	<!-- ------Contact Us Modal-------------------------------- -->
+
+	  <div class="modal fade" id="exampleModalCentercontact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Contact Us</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				Email : <b> pravesha2k19@gmail.com </b> <br> <br>
+				Mobile : <br><i style="padding-left: 62px;color: rgb(35, 155, 35)"> (Student coordinators)</i> <br> <br>
+				 <b style="padding-left: 62px;">7401464042 </b> - Highnes Joseph <br> <br>
+				<b style="padding-left: 62px;">9840723698 </b> - Trishiraj <br> <br>
+				<i style="padding-left: 62px;color: rgb(35, 155, 35);"> (Staff coordinator)</i> <br><br>
+				<b style="padding-left: 62px;">8124420832 </b> - J Senthil Kumar 
+				
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+<!--===============================================================================================-->
+	<!-- <script src="{% static 'basic_app/index/jquery/jquery-3.2.1.min.js' %}"></scri
+		pt> -->
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/css/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/css/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'basic_app/index/css/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/css/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/css/vendor/daterangepicker/moment.min.jss' %}"></script>
+	<script src="{% static 'basic_app/index/css/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/css/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'basic_app/index/js/main.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

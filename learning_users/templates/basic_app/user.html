@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'basic_app/css/user_page/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'basic_app/css/user_page/Team-Boxed.css' %}">
+        <link rel="stylesheet" href="{% static 'basic_app/css/user_page/Features-Boxed.css' %}">
+        
+        
+        
+        <div class="team-boxed" style="display: flex;justify-content:center;">
+            <div class="container">
+                <div class="intro"></div>
+                <div class="row people">
+                    <div class="col-md-6 col-lg-4 item">
+                        <div class="box"><i class="fa fa-user-circle" style="font-size:110px;color:rgb(4,156,65);"></i>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Reg ID</td>
+                                            <td style="text-align:left;">{{ user.username }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>First Name</td>
+                                            <td style="text-align:left;">{{ user.first_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name</td>
+                                            <td style="text-align:left;">{{ user.last_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td style="text-align:left;">{{ user.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile No</td>
+                                            <td style="text-align:left;">{{ user.profile.mob_no }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-boxed"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+</body>
+</html>

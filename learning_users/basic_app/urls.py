@@ -8,5 +8,10 @@ app_name = 'basic_app'
 urlpatterns=[
     url(r'^register/$',views.register,name='register'),
     url(r'^user_login/$',views.user_login,name='user_login'),
-    url(r'^new_user/$',views.newuser_reg,name='new_user'),
+    url(r'^food_pref_updt/$',views.food_pref_updt,name='food_pref_updt'),
+    url(r'^participate/$',views.participate,name='participate'),
+    url(r'^departicipate/$',views.departicipate,name='departicipate'),
+    url(r'^user/$',views.user,name='user'),
 ]
+
+

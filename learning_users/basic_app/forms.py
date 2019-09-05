@@ -7,10 +7,10 @@ class UserForm(forms.ModelForm):
 
     class Meta():
         model = User
-        fields = ('username','email','password')
+        fields = ('first_name','last_name','email','password')
 
 
 class UserProfileInfoForm(forms.ModelForm):
     class Meta():
         model = UserProfileInfo
-        fields = ('portfolio_site','profile_pic')
+        fields = ('mob_no','college','dept','college_reg_id')

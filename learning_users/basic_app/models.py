@@ -6,36 +6,44 @@ from django import forms
 class UserProfileInfo(models.Model):
 
     # Create relationship (don't inherit from User!)
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
 
-    # Add any additional attributes you want
-    portfolio_site = models.URLField(blank=True)
-    # pip install pillow to use this!
-    # Optional: pip install pillow --global-option=”build_ext” --global-option=”--disable-jpeg”
-    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+    # # Add any additional attributes you want
+    #portfolio_site = models.URLField(blank=True)
+    # # pip install pillow to use this!
+    # # Optional: pip install pillow --global-option=”build_ext” --global-option=”--disable-jpeg”
+    #profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+
+    mob_no = models.CharField(max_length=10,blank=False,default=None)
+    college = models.CharField(max_length=120,blank=False,default=None)
+    dept = models.CharField(max_length=120,blank=False,default=None)
+    college_reg_id = models.CharField(max_length=50,blank=False,default=None)
+    food_pref = models.CharField(max_length=10,blank=True,default='ND')
+    #Events------------------------------
+    pp = models.BooleanField(default=False)
+    bat= models.BooleanField(default=False)
+    tq = models.BooleanField(default=False)
+    ar = models.BooleanField(default=False)
+    aio = models.BooleanField(default=False)
+    ty = models.BooleanField(default=False)
+    syt = models.BooleanField(default=False)
+    mod = models.BooleanField(default=False)
+    th = models.BooleanField(default=False)
+    pubg = models.BooleanField(default=False)
+    # tiktok = models.BooleanField(default=False)
+    # opm = models.BooleanField(default=False)
+    # mc = models.BooleanField(default=False)
+    # meme = models.BooleanField(default=False)
+    payment_stats = models.BooleanField(default=False)
+    cs = models.BooleanField(default=False)
+    
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return self.user.username
 
-class userInfo(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
 
-    f_name=models.CharField(max_length=20)
-    l_name=models.CharField(max_length=20)
-    email=models.EmailField(max_length=70,primary_key=True)
-    mob=models.PositiveIntegerField
-    active=models.BooleanField(default=False)
-    password=forms.CharField(widget=forms.PasswordInput())
-
-    #Address
-
-    house=models.CharField(max_length=40)
-    street=models.CharField(max_length=185)
-    dist=models.CharField(max_length=185)
-    state=models.CharField(max_length=185)
-    pin=models.PositiveIntegerField
-
-class ms_code_updater(models.Model):
-    intcode=models.PositiveIntegerField(default=1112)
-
+class Log(models.Model):
+    refuser = models.CharField(max_length=10,blank=False,default=None)
+    mob_no_log = models.CharField(max_length=10,blank=False,default=None)
+    email_log = models.CharField(max_length=50,blank=False,default=None)
