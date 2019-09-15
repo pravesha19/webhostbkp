@@ -452,3 +452,15 @@ iframe {
     padding-right: 15px;
   }
 }
+
+
+.mobile-image{
+  display: block;
+  }
+
+@media (min-width:992px){
+  .mobile-image{
+  display: none;
+  }
+}
+    

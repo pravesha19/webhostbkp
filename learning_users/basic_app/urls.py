@@ -12,6 +12,8 @@ urlpatterns=[
     url(r'^participate/$',views.participate,name='participate'),
     url(r'^departicipate/$',views.departicipate,name='departicipate'),
     url(r'^user/$',views.user,name='user'),
+    url(r'^user_login/coordinator$',views.coordinator,name='coordinator'),
+    url(r'^report$',views.report,name='report'),
 ]
 
 

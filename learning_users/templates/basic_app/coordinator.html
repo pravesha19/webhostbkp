@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pravesha'19</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script>
+      window.onload = function () {
+      
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light1", // "light1", "light2", "dark1", "dark2"
+        title: {
+          text: "Event Registrations"
+        },
+        axisY: {
+          title: "No of Registrations",
+          suffix: "",
+          includeZero: false
+        },
+        axisX: {
+          title: "Events"
+        },
+        data: [{
+          type: "column",
+          yValueFormatString: "#,##0.0#\"%\"",
+          dataPoints: [
+            { label: "Paper Presentation", y: {{pp_l}} },	
+            { label: "Block & Tackle", y: {{bat_l}} },	
+            { label: "Tech Quiz", y: {{tq_l}} },
+            { label: "Adzap Re", y: {{ar_l}} },	
+            { label: "Assemble IO", y: {{aio_l}} },
+            { label: "Typist", y: {{ty_l}} },
+            { label: "Show your Talent", y: {{syt_l}} },
+            { label: "Moment of the day", y: {{mod_l}} },
+            { label: "Treasure Hunt", y: {{th_l}} },
+            { label: "PUBG", y: {{pubg_l}} }
+            
+          ]
+        }]
+      });
+      chart.render();
+      
+      }
+      </script>
+<body>
+        <ul class="nav justify-content-end" style="padding: 1.5%; background-color: teal;" >  
+                <li class="nav-item" style="padding-right: 5%;">
+                  <a class="nav-item" href="{%url 'logout'%}" style="color:  #f9e79f;">Logout</a>
+                </li>
+        
+              </ul>
+        
+    <div class="container" style="padding-top:5%;">
+        <div class="alert alert-info" role="alert" >
+                Total No of Registrations : {{footfall}} <h6><span class="badge badge-secondary">Join Pending : {{left}}</span> <span class="badge badge-secondary">Login Pending : {{logleft}}</span> </h6> 
+                
+        </div>
+    </div>
+
+
+<div class="container">
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

@@ -121,6 +121,22 @@
   
 }
 
+#id_Year
+{
+    width: 95%;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+  
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+    padding: 2%;
+  
+}
+
 li{
     color:white;
     font-size: 0px;

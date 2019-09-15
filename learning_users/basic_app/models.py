@@ -17,6 +17,7 @@ class UserProfileInfo(models.Model):
     mob_no = models.CharField(max_length=10,blank=False,default=None)
     college = models.CharField(max_length=120,blank=False,default=None)
     dept = models.CharField(max_length=120,blank=False,default=None)
+    Year = models.IntegerField(default=0,max_length=1)
     college_reg_id = models.CharField(max_length=50,blank=False,default=None)
     food_pref = models.CharField(max_length=10,blank=True,default='ND')
     #Events------------------------------

@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 from basic_app.models import UserProfileInfo,Log
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 
 
@@ -21,6 +23,22 @@ def index(request):
     profile_form = UserProfileInfoForm(data=request.POST)
     return render(request,'basic_app/index.html',{'user_form':user_form,
                            'profile_form':profile_form,})
+
+def coordinator(request):
+    footfall = len(UserProfileInfo.objects.filter(cs=False))-2
+    pp_l = len(UserProfileInfo.objects.filter(pp=True))
+    bat_l = len(UserProfileInfo.objects.filter(bat=True))
+    tq_l = len(UserProfileInfo.objects.filter(tq=True))
+    ar_l = len(UserProfileInfo.objects.filter(ar=True))
+    aio_l = len(UserProfileInfo.objects.filter(aio=True))
+    ty_l = len(UserProfileInfo.objects.filter(ty=True))
+    syt_l = len(UserProfileInfo.objects.filter(syt=True))
+    mod_l = len(UserProfileInfo.objects.filter(mod=True))
+    th_l = len(UserProfileInfo.objects.filter(th=True))
+    pubg_l = len(UserProfileInfo.objects.filter(pubg=True))
+    logleft = len(User.objects.filter(last_login=None))
+    left = len(UserProfileInfo.objects.filter(cs=False,pp=False,bat=False,tq=False,ar=False,aio=False,ty=False,syt=False,mod=False,th=False,pubg=False)) - 2
+    return render(request, 'basic_app/coordinator.html',{'footfall':footfall ,'pp_l':pp_l,'bat_l':bat_l,'tq_l':tq_l,'ar_l':ar_l,'aio_l':aio_l,'ty_l':ty_l,'syt_l':syt_l,'mod_l':mod_l,'th_l':th_l,'pubg_l':pubg_l,'left':left,'logleft':logleft})
 
 @login_required
 def special(request):
@@ -145,7 +163,7 @@ def user_login(request):
                 if user.profile.cs == False:
                     return HttpResponseRedirect(reverse('index'))
                 else:
-                    print("HI")    
+                    return HttpResponseRedirect('coordinator')
             else:
                 # If account is not active:
                 return HttpResponse("Your account is not active.")
@@ -156,7 +174,7 @@ def user_login(request):
 
     else:
         #Nothing has been provided for username or password.
-        return render(request, 'basic_app/login.html', {})
+        return HttpResponseRedirect(reverse('index'))
 
 
 def food_pref_updt(request):
@@ -230,3 +248,26 @@ def departicipate(request):
 
 def user(request):
     return render(request, 'basic_app/user.html')
+
+
+def report(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+
+
